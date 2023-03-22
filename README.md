@@ -1,7 +1,7 @@
 # EFI-Opencore-Hackintosh-for-ASUS-VivoBook-X509FJ
 Đây là EFI do mình tự Build, dành cho máy ASUS VivoBook model X509FJ. Thấy không ai sử dụng máy này Hackintosh nên mình tự build, có thể còn nhiều lỗi chưa được phát hiện và chưa được fix, nói chung mình là newbie mới tập hack nên không thể nào bằng các bác hackintosher lâu năm trong nghề được. Rất mong được mọi người giúp đỡ thêm để file EFI này hoàn chỉnh hơn.
 
-Được build trên phiên bản mới nhất của OpenCore (0.8.6), mới nhất ở thời điểm hiện tại.
+Được build trên phiên bản mới nhất của OpenCore (0.9.0), mới nhất ở thời điểm hiện tại.
 Bạn vui lòng vào phần Release để tải về nhé!
 
 ## Phiên bản OpenCore và phiên bản macOS đang sử dụng:
