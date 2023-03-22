@@ -8,9 +8,9 @@ Bạn vui lòng vào phần Release để tải về nhé!
 
 | OpenCore  | macOS   |
 | --------  | ------- |
-|   0.8.6 (mới nhất)  | Monterey 12.6.1 (Sử dụng SMBIOS ```MacBookPro15,2```) |
+|   0.9.0 (mới nhất)  | Monterey 12.6.3 (Sử dụng SMBIOS ```MacBookPro15,2```) |
 
-### Cảnh báo: Không nên dùng để cài bản macOS 13 Ventura vì kext Wi-Fi cho đến thời điểm hiện tại chưa có phiên bản tương tích.
+### Cảnh báo: Không nên dùng để cài bản macOS 13 Ventura. Kext Airportitlwm (Wi-Fi Intel) không hoạt động và cố tình cài có thể gây treo, tuy nhiên bạn có thể cài Ventura và sử dụng Wi-Fi gốc với kext Itlwm cùng với app HeliPort (giả lập Ethernet dựa trên Wi-Fi).
 #### Nếu sử dụng trên Big Sur, Catalina hoặc Mojave yêu cầu thay đổi kext Wi-Fi sao cho tương ứng với phiên bản macOS. Đối với Bluetooth thêm kext IntelBluetoothInjector.kext (do EFI này được build để cài đặt bản Monterey nên loại bỏ kext này do Apple viết lại cơ chế Bluetooth) và xóa kext BluetoothFixUp.kext.
 
 
@@ -24,16 +24,16 @@ Model laptop: ASUS VivoBook X509FJ (EJ227T).
 CPU: Intel Core i3 8145U 2.3Ghz 2 nhân 4 luồng (dòng chipset Whiskey Lake, dựa trên Comet Lake) (hoạt động).
 
 
-RAM: 4GB 2400Mhz (của Micron) (hoạt động).
+RAM: 12GB 2400Mhz (của Micron) (hoạt động).
 
 
 GPU: 
-- iGPU (card màn hình onboard): Intel UHD Graphics 620 (1GB VRAM) (hoạt động)
-- dGPU (card màn hình rời): nVIDIA GeForce MX230 (chipset GP108, Pascal) (2GB VRAM), (không hoạt động, có thể web driver của nVIDIA hỗ trợ vì xài chipset hỗ trợ nhưng chắc cũng không cài được vì macOS không hỗ trợ Optimus như Windows, đã tắt bằng SSDT).
+- iGPU (card màn hình onboard): Intel UHD Graphics 620 (2GB VRAM), (hoạt động)
+- dGPU (card màn hình rời): nVIDIA GeForce MX230 (chipset GP108, Pascal) (2GB VRAM), (không hoạt động)
 
   
 Ổ cứng: 
-- HDD: Toshiba MQ04ABF100 (hoạt động, để chế độ AHCI, để theo cài đặt BIOS gốc để chế độ RAID thì không hoạt động.)
+- HDD: Toshiba MQ04ABF100 (hoạt động, để chế độ AHCI, để theo cài đặt BIOS gốc ở chế độ RAID thì không hoạt động.)
 - 1 khe SSD M.2 (chưa gắn), cài qua ổ cứng ngoài (dùng đế cắm, cắm vào cổng USB 3.0). (Hoạt động).
 
 
@@ -43,10 +43,10 @@ Card Wi-Fi: Intel Wireless AC-9461 (hoạt động).
 Card Bluetooth: sử dụng chung chipset Intel Wireless AC-9461 (hoạt động).
 
 
-Card âm thanh: Realtek ALC256 (hoạt động tại layout-id 66, mic, tai nghe và loa ngoài tất cả đều nhận). Tai nghe nhận được thông qua bản vá SSDT.
+Card âm thanh: Realtek ALC256 (hoạt động tại layout-id 66, mic, tai nghe và loa ngoài tất cả đều nhận).
 
 
-Các cổng USB: 2 cổng USB phải (USB 2.0), 2 cổng USB trái (1 cổng USB 3.1 và 1 cổng Type C), riêng cổng Type C không hoạt động. 
+Các cổng USB: 2 cổng USB phải (USB 2.0), 2 cổng USB trái (1 cổng USB 3.1 và 1 cổng Type C), riêng cổng Type C chỉ hoạt động khi bạn cắm usb trước khi bật máy. Sau khi boot vào macOS thì cắm nó sẽ không nhận (Không có khả năng cắm nóng - hiện tại chưa fix được). 
 
 
 Bàn di chuột: ELAN1200. (Hoạt động bình thường, cả khi sleep wake lại vẫn bình thường, 1 số bác report riêng loại chipset touchpad này dùng 1 lúc sẽ bị đơ nhưng mình không gặp hiện tượng đó, hoặc chưa có cơ duyên gặp :D).
@@ -61,21 +61,21 @@ Khe đọc thẻ nhớ Micro-SD: Realtek Card Reader USB 2.0 (hoạt động).
 Camera: Realtek USB 2.0 VGA UVC WebCam (hoạt động).
 
 ## Tổng hợp lại các thứ hoạt động:
-- CPU
+- CPU.
 
-- RAM
+- RAM.
 
-- iGPU (card màn hình onboard)
+- iGPU (card màn hình onboard).
 
-- Wi-Fi 
+- Wi-Fi.
 
-- Bluetooth
+- Bluetooth.
 
-- Âm thanh
+- Âm thanh.
 
-- USB (chỉ có 2 cổng USB và 1 cổng USB 3.1 nhận)
+- USB (Riêng USB Type C phải cắm trước khi boot vào macOS thì mới nhận).
 
-- Bàn di chuột 
+- Bàn di chuột.
 
 - Khe đọc thẻ nhớ Micro SD.
 
@@ -89,16 +89,14 @@ Camera: Realtek USB 2.0 VGA UVC WebCam (hoạt động).
 
 - Restart / Shutdown.
 
+- HDMI (chỉ 4K 30Hz).
+
 ## Tổng hợp các thứ không hoạt động:
 - dGPU (card màn hình rời).
 
 - Vân tay (nếu có ai fake được hệ thống Touch ID của Apple chắc may ra được).
 
 - Phím khóa Function (tổ hợp phím Fn + Esc).
-
-- Cổng USB Type C (đã map nhưng không nhận, chắc cần phải patch vá gì gì đó nó mới nhận).
-
-- Phím nguồn (ấn nhưng không có tác dụng, chỉ có thể giữ để tắt nóng).
 
 - Đèn nền bàn phím (dòng model này không có đèn nền).
 
@@ -107,18 +105,15 @@ Camera: Realtek USB 2.0 VGA UVC WebCam (hoạt động).
 ## Những thứ hoạt động không ổn định (có vấn đề) hoặc chưa được kiểm tra:
 
 Chưa được kiểm tra:
-- HDMI (chưa được kiểm tra và không biết có hoạt động không vì không có chỗ thử).
 
 - Các ứng dụng iService (chưa được kiểm thử nên không biết có hoạt động không).
 
 - Các tính năng phụ của macOS như BootCamp, Night Shift, FileVault,...
 
-- Microphone ngoài theo cổng 3.5 (thấy có trong mục Audio mà không biết hoạt động không).
-
 - SSD loại M.2, vì mình không có SSD M.2 cũng như điều kiện kinh tế chưa cho phép, bạn nào có máy cùng model giống mình mà có SSD M.2 có thể thử nhé, mình có bỏ vào kext NVMeFix dành cho những loại SSD không phải của Apple nên chắc chạy được, nhưng chưa kiểm tra nên cũng không chắc.
 
 Hoạt động không ổn định:
-- Quản lý năng lượng (Power Management), đã sử dụng kext CPUFriendDataProvider nhưng chắc config không chuẩn nên máy tuột pin rất nhanh so với Windows.
+- Quản lý năng lượng (Power Management), pin tuột nhanh hơn so với dùng Windows.
 
 - Pin (tuột nhanh, có thể bị báo sai nữa, có lúc đang sạc mỗi lần khởi động lại máy lại báo mức pin khác nhau).
 
@@ -130,11 +125,18 @@ Hoạt động không ổn định:
 
 - Bluetooth: kết nối với Bluetooth nếu không sử dụng ngay sau khi kết nối (chừng 15 - 30s), ví dụ như truyền file, xuất âm thanh ra loa Bluetooth thì nó sẽ tự ngắt kết nối (???)
 
-- Âm thanh: nếu khởi động máy từ Windows trước, khi reboot lại chuyển qua macOS thì bị mất tiếng. Shutdown và boot trở lại vào macOS thì âm thanh hoạt động bình thường.
+- Âm thanh: nếu khởi động máy từ Windows trước, khi reboot lại chuyển qua macOS thì bị mất tiếng. Shutdown và boot trở lại vào macOS thì âm thanh hoạt động bình thường. 
 
+- HDMI: không xuất được màn hình ở độ phân giải 4K 60Hz. Chỉ hoạt động ở 4K 30Hz. Mình đang tìm hiểu cách vá lỗi.
 
 ## Những thứ có vấn đề không biết sửa:
-- Báo lỗi ACPI Error liên quan đến _UPC (AE_ALREADY_EXIST) trong chế độ Verbose Mode, hiện tại mình không biết fix làm sao hết, search google thì có vẻ cái này liên quan đến USB.
+- Báo lỗi ACPI Error liên quan đến _UPC (AE_ALREADY_EXIST) trong chế độ Verbose Mode, hiện tại mình không biết fix làm sao hết vì không chuyên sâu về SSDT, search google thì có vẻ cái này liên quan đến USB.
+
+## Những thứ vừa sửa được qua bản cập nhật:
+- HDMI (tuy nhiên không hoạt động với 4K 60Hz).
+- Cổng âm thanh 3.5.
+- USB Type C (tuy nhiên cần cắm trước khi boot vào macOS).
+- Bật hiệu ứng đèn nền giúp tăng giảm độ sáng mượt mà hơn (Như Windows). 
 
 ## Những điều cần lưu ý:
 - Ở đây theo build gốc thì mình Build EFI OpenCore theo phiên bản macOS 12 Monterey, vì macOS Monterey được Apple viết lại cơ chế Injector Bluetooth, chi tiết ở đây:  [Link🔗](https://openintelwireless.github.io/IntelBluetoothFirmware/FAQ.html#what-additional-steps-should-i-do-to-make-bluetooth-work-on-macos-monterey-and-newer).
@@ -142,9 +144,7 @@ Do đó, nếu bạn muốn sử dụng EFI này trên phiên bản Big Sur thì
 
 - CẢNH BÁO: EFI này chưa được kiểm tra hoạt động trên macOS Big Sur (macOS 11), macOS Catalina (macOS 10.15) và Mojave (macOS 10.14), (phiên bản thấp nhất hỗ trợ chipset Comet Lake, Whiskey Lake dựa trên chipset này) nên mình không chắc chắn nó chạy được, mọi người có thể thử rồi report cho mình biết nha. EFI này chỉ được kiểm thử trên Monterey (macOS 12).
 
-- CẢNH BÁO thứ 2: Không nên sử dụng EFI này để cài đặt macOS Ventura (macOS 13). Vì kext Wi-Fi của Intel chưa có cho bản Ventura (đang được thử nghiệm), nếu bạn cài sẽ bị tịt cái Wi-Fi, thiệt ra thì nó vẫn nhận Wi-Fi đó nhưng bạn kết nối máy sẽ bị treo cứng ngay lặp tức (có vẻ bị kernel panic, lỗi tương tự màn hình xanh chết chóc trên Windows). 
-
-- Mình dùng USBToolBox, cũng có thể map không đúng nên nó không nhận USB Type C, hoặc phải patch cái gì thêm, nói chung mình là newbie nên không rành kakaka, bác nào rành giúp mình vụ này với, mình cảm ơn rất nhiều.
+- CẢNH BÁO thứ 2: Không nên sử dụng EFI này để cài đặt macOS Ventura (macOS 13). Vì kext Wi-Fi Airportitlwm (Wi-Fi Intel) không hoạt động do chưa có update mới cho phiên bản Ventura (đang được thử nghiệm), nếu bạn cài sẽ bị tịt cái Wi-Fi, thiệt ra thì nó vẫn nhận Wi-Fi đó nhưng bạn kết nối máy sẽ bị treo cứng ngay lặp tức (xem log có vẻ bị kernel panic, lỗi tương tự màn hình xanh chết chóc trên Windows). Nếu bạn vẫn muốn cài, bạn có thể sử dụng kext Itlwm cùng với app HeliPort (giả lập Ethernet dựa trên Wi-Fi) để sử dụng card Wi-Fi gốc trên máy.
 
 - Máy này tính ra hackintosh cấu hình dễ chịu đó các bạn, để mặc định hack luôn có kext sẵn hết không cần tháo thay gì hết kakaka, dĩ nhiên nếu các bạn thay sang card mà realmac dùng thì sẽ okay hơn nhưng thôi mình không muốn thay gì hết kakaka, thích chơi đồ nguyên bản thôi, chức năng phần cứng cũng hầu như nhận hết, thẻ nhớ cũng nhận luôn, bá vãi cả linh hồn, nhờ ông nào giúp được cái USB-C nữa thì máy này không khác gì realmac.
 
