@@ -143,7 +143,30 @@ Hoạt động không ổn định:
 ## Những điều cần lưu ý:
 - EFI này có thể sử dụng cho phiên bản macOS mới nhất Ventura và bản Sonoma beta. Tuy nhiên, khi cài đặt thì Wi-Fi trên Sonoma sẽ không thể sử dụng được (mặc dù OpenCore không báo tiêm kext thất bại). Bạn có thể sử dụng giải pháp kext Itlwm cùng với app HeliPort để thay thế.
 
-- CẢNH BÁO: Wi-Fi từ High Sierra đến Ventura hoạt động ổn định. Tuy nhiên, OpenCore gặp 1 lỗi bug đối với Catalina trở xuống, kext Wi-Fi chỉ nhúng được vào trong bộ cài. Khi boot vào trong macOS thì OpenCore gặp bug không tiêm được Kext vào hệ thống macOS. Giải pháp cho vấn đề này thì bạn sẽ cần dùng Kext Droplet để cài đặt kext Wi-Fi từ EFI vào thẳng hệ thống macOS thì Wi-Fi sẽ hoạt động bình thường. [Link🔗](https://github.com/chris1111/Kext-Droplet/releases/tag/V2)
+**- CẢNH BÁO: Wi-Fi từ High Sierra đến Ventura hoạt động ổn định. Tuy nhiên, OpenCore gặp 1 lỗi bug đối với Catalina trở xuống, kext Wi-Fi chỉ nhúng được vào trong bộ cài. Khi boot vào trong macOS thì OpenCore gặp bug không tiêm được Kext vào hệ thống macOS. Giải pháp cho vấn đề này thì bạn sẽ cần dùng Kext Droplet để cài đặt kext Wi-Fi từ EFI vào thẳng hệ thống macOS thì Wi-Fi sẽ hoạt động bình thường. [Link🔗](https://github.com/chris1111/Kext-Droplet/releases/tag/V2)**
+
+**- CẢNH BÁO 2: Nếu dùng EFI này để cài macOS High Sierra, bạn cần có bộ cài macOS High Sierra 10.13.6 có tích hợp bản cập nhật bổ sung dành cho kiểu máy MacBook Pro 2018 (mã build 17G2112). Đa phần các bộ cài macOS High Siera trên mạng đều là bản cũ hoặc thấp hơn version này nên khi bạn boot vào sẽ xảy ra một trong hai lỗi như sau:**
+
+  ![image](https://github.com/khanhvitinh/EFI-Opencore-Hackintosh-for-ASUS-VivoBook-X509FJ/assets/110464941/237ec57f-44d4-43db-a3ae-e379c9914247)
+_Lỗi cấm đi ngược chiều huyền thoại trên macOS khi bộ cài không tương tích hoặc database có trong bộ cài không hỗ trợ kiểu máy Mac (xuất hiện khi boot không verbose)_
+
+
+![image](https://github.com/khanhvitinh/EFI-Opencore-Hackintosh-for-ASUS-VivoBook-X509FJ/assets/110464941/cde0a33c-03b3-431b-812a-db0f3ebdd2be)
+_Lỗi khi bộ cài kiểm tra SMBIOS và phát hiện SMBIOS không có trong database của bộ cài nên chặn không cho boot (chỉ xuất hiện khi boot verbose)_
+
+
+_**Để vượt lỗi này, bạn có 2 phương pháp:**_
+
+**_- Phương pháp 1: Bạn cần một máy hackintosh hoặc máy Mac khác tải bộ cài High Sierra từ App Store và write ra usb để cài. Cái này hơi bất tiện nhưng là phương pháp tối ưu nhất vì bộ cài từ App Store luôn là bản mới nhất._**
+
+**_- Phương pháp 2: Vượt lỗi check SMBIOS bằng cách ấn tổ hợp phím Command + C và Minus (phím dấu trừ) khi đang ở trong màn hình Menu Boot của OpenCore (đối với laptop này là phím Windows + C và dấu trừ) hoặc thêm boot-args -no_compat_check trong file config.plist của EFI này._**
+
+_Phương pháp này không tối ưu và không phải lúc nào cũng thành công, nếu phiên bản bộ cài quá xa với phiên bản được yêu cầu như trên (như 10.13.5 trở xuống thì có thể không khởi động được và sẽ bị treo). Đối với bộ cài online tải từ hướng dẫn tạo EFI OpenCore trên trang Dortania thì cách này thực hiện được. Sau khi cài đặt thành công, bạn có thể cần cài bản cập nhật bổ sung 1 và 2 để có thể điều chỉnh được độ sáng và hệ thống hoạt động ổn định._  
+
+Bản cập nhật số 1: [Link🔗](https://support.apple.com/kb/DL1973)
+Bản cập nhật số 2: [Link🔗](https://support.apple.com/kb/DL1974)
+
+Trong tương lai nếu các phiên bản macOS sau không còn hỗ trợ SMBIOS MacBook Pro 2018 nữa thì chúng ta cũng có thể áp dụng cách như trên để vượt lỗi và cài đặt.
 
 - Máy này tính ra hackintosh cấu hình dễ chịu đó các bạn, để mặc định hack luôn có kext sẵn hết không cần tháo thay gì hết kakaka, dĩ nhiên nếu các bạn thay sang card mà realmac dùng thì sẽ okay hơn nhưng thôi mình không muốn thay gì hết kakaka, thích chơi đồ nguyên bản thôi, chức năng phần cứng cũng hầu như nhận hết, thẻ nhớ cũng nhận luôn, bá vãi cả linh hồn, nhờ ông nào giúp được cái USB-C nữa thì máy này không khác gì realmac.
 
