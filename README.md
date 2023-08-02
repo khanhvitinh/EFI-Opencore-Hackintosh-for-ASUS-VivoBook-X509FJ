@@ -159,7 +159,7 @@ _**Để vượt lỗi này, bạn có 2 phương pháp:**_
 
 **_- Phương pháp 1: Bạn cần một máy hackintosh hoặc máy Mac khác tải bộ cài High Sierra từ App Store và write ra usb để cài. Cái này hơi bất tiện nhưng là phương pháp tối ưu nhất vì bộ cài từ App Store luôn là bản mới nhất, thường chứa các bản cập nhật bảo mật mới hơn 2 bản cập nhật bổ sung nên database đã được cập nhật và ta có thể sử dụng._**
 
-**_- Phương pháp 2: Vượt lỗi check SMBIOS bằng cách ấn tổ hợp phím Command + C và Minus (phím dấu trừ) khi đang ở trong màn hình Menu Boot của OpenCore (đối với laptop này là phím Windows + C và dấu trừ) hoặc thêm boot-args -no_compat_check trong file config.plist của EFI này._**
+**_- Phương pháp 2: Sử dụng bộ cài bạn đang có và vượt lỗi check SMBIOS bằng cách ấn tổ hợp phím Command + C và Minus (phím dấu trừ) khi đang ở trong màn hình Menu Boot của OpenCore (đối với laptop này là phím Windows + C và dấu trừ) hoặc thêm boot-args -no_compat_check trong file config.plist của EFI này._**
 
 _Phương pháp này không tối ưu và không phải lúc nào cũng thành công, nếu phiên bản bộ cài quá xa với phiên bản được yêu cầu như trên (như 10.13.5 trở xuống thì có thể không khởi động được và sẽ bị treo). Đối với bộ cài online tải từ hướng dẫn tạo EFI OpenCore trên trang Dortania thì cách này thực hiện được. Sau khi cài đặt thành công, bạn có thể cần cài bản cập nhật bổ sung 1 và 2 để có thể điều chỉnh được độ sáng và hệ thống hoạt động ổn định. Sau khi cài đặt bạn nhớ loại bỏ boot-args -no_compat_check vì nó có thể gây 1 số lỗi khác._  
 
