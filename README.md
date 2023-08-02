@@ -1,17 +1,16 @@
 # EFI-Opencore-Hackintosh-for-ASUS-VivoBook-X509FJ
 Đây là EFI do mình tự Build, dành cho máy ASUS VivoBook model X509FJ. Thấy không ai sử dụng máy này Hackintosh nên mình tự build, có thể còn nhiều lỗi chưa được phát hiện và chưa được fix, nói chung mình là newbie mới tập hack nên không thể nào bằng các bác hackintosher lâu năm trong nghề được. Rất mong được mọi người giúp đỡ thêm để file EFI này hoàn chỉnh hơn.
 
-Được build trên phiên bản mới nhất của OpenCore (0.9.0), mới nhất ở thời điểm hiện tại.
+Được build trên phiên bản mới nhất của OpenCore (0.9.3), mới nhất ở thời điểm hiện tại.
 Bạn vui lòng vào phần Release để tải về nhé!
 
 ## Phiên bản OpenCore và phiên bản macOS đang sử dụng:
 
 | OpenCore  | macOS   |
 | --------  | ------- |
-|   0.9.0 (mới nhất)  | Monterey 12.6.3 (Sử dụng SMBIOS ```MacBookPro15,2```) |
+|   0.9.3 (mới nhất)  | Ventura 13.5 (Sử dụng SMBIOS ```MacBookPro15,2```) |
 
-### Cảnh báo: Không nên dùng để cài bản macOS 13 Ventura. Kext Airportitlwm (Wi-Fi Intel) không hoạt động và cố tình cài có thể gây treo, tuy nhiên bạn có thể cài Ventura và sử dụng Wi-Fi gốc với kext Itlwm cùng với app HeliPort (giả lập Ethernet dựa trên Wi-Fi).
-#### Nếu sử dụng trên Big Sur, Catalina hoặc Mojave yêu cầu thay đổi kext Wi-Fi sao cho tương ứng với phiên bản macOS. Đối với Bluetooth thêm kext IntelBluetoothInjector.kext (do EFI này được build để cài đặt bản Monterey nên loại bỏ kext này do Apple viết lại cơ chế Bluetooth) và xóa kext BluetoothFixUp.kext.
+### Cảnh báo: EFI này không nên sử dụng để cài đặt macOS Sonoma (macOS 14). Nếu cài, bạn sẽ mất Wi-Fi (Bluetooth vẫn hoạt động bình thường ???). Để có thể sử dụng được Wi-Fi, vui lòng đọc mục "Những điều cần lưu ý" ở dưới. Cảm ơn bạn! 
 
 
 </div>
@@ -33,8 +32,8 @@ GPU:
 
   
 Ổ cứng: 
-- HDD: Toshiba MQ04ABF100 (hoạt động, để chế độ AHCI, để theo cài đặt BIOS gốc ở chế độ RAID thì không hoạt động.)
-- 1 khe SSD M.2 (chưa gắn), cài qua ổ cứng ngoài (dùng đế cắm, cắm vào cổng USB 3.0). (Hoạt động).
+- Khe SATA: Samsung EVO 860 500GB (hoạt động, để chế độ AHCI, để theo cài đặt BIOS gốc ở chế độ RAID thì không hoạt động.)
+- Khe PCIe: Sabrent Rocket NVMe 256GB (Hoạt động).
 
 
 Card Wi-Fi: Intel Wireless AC-9461 (hoạt động).
@@ -75,13 +74,15 @@ Camera: Realtek USB 2.0 VGA UVC WebCam (hoạt động).
 
 - USB (Riêng USB Type C phải cắm trước khi boot vào macOS thì mới nhận).
 
-- Bàn di chuột.
+- Bàn di chuột (đa điểm).
 
 - Khe đọc thẻ nhớ Micro SD.
 
 - Camera.
 
 - Cổng sạc.
+
+- SSD (PCIe và SATA).
 
 - Chế độ ngủ (Sleep).
 
@@ -90,6 +91,10 @@ Camera: Realtek USB 2.0 VGA UVC WebCam (hoạt động).
 - Restart / Shutdown.
 
 - HDMI (chỉ 4K 30Hz).
+
+- Các ứng dụng iService (Đăng nhập Apple ID như bình thường).
+
+- Các tính năng phụ của macOS như BootCamp, Night Shift, FileVault,...
 
 ## Tổng hợp các thứ không hoạt động:
 - dGPU (card màn hình rời).
@@ -106,12 +111,6 @@ Camera: Realtek USB 2.0 VGA UVC WebCam (hoạt động).
 
 Chưa được kiểm tra:
 
-- Các ứng dụng iService (chưa được kiểm thử nên không biết có hoạt động không).
-
-- Các tính năng phụ của macOS như BootCamp, Night Shift, FileVault,...
-
-- SSD loại M.2, vì mình không có SSD M.2 cũng như điều kiện kinh tế chưa cho phép, bạn nào có máy cùng model giống mình mà có SSD M.2 có thể thử nhé, mình có bỏ vào kext NVMeFix dành cho những loại SSD không phải của Apple nên chắc chạy được, nhưng chưa kiểm tra nên cũng không chắc.
-
 Hoạt động không ổn định:
 - Quản lý năng lượng (Power Management), pin tuột nhanh hơn so với dùng Windows.
 
@@ -121,11 +120,9 @@ Hoạt động không ổn định:
 
 - Màn hình (có vẻ màn hình tối hơn lúc máy chạy Windows, mình đã chỉnh đến độ sáng tối đa nhưng màn hình sáng (theo mình cảm nhận) chỉ bằng 80% lúc máy chạy hệ điều hành Windows).
 
-- Wi-Fi: có lúc bị điên điên khùng khùng không kết nối được Wi-Fi, phải reset NVRAM hoặc boot lại qua Windows rồi trở lại Hackintosh thì may ra được.
+- Wi-Fi: có lúc bị điên điên khùng khùng không kết nối được Wi-Fi, phải reset NVRAM hoặc boot lại qua Windows rồi trở lại Hackintosh thì may ra được. Đối với Ventura khi boot vào bộ cài online có khi không bật sẵn Wi-Fi mà cần tự bật. Các phiên bản khác không gặp vấn đề này. Các phiên bản Catalina trở xuống khi boot vào macOS thì OpenCore gặp bug không tiêm được kext vào hệ thống macOS. Về vấn đề này để khắc phục bạn vui lòng xem ở dưới.
 
-- Bluetooth: kết nối với Bluetooth nếu không sử dụng ngay sau khi kết nối (chừng 15 - 30s), ví dụ như truyền file, xuất âm thanh ra loa Bluetooth thì nó sẽ tự ngắt kết nối (???)
-
-- Âm thanh: nếu khởi động máy từ Windows trước, khi reboot lại chuyển qua macOS thì bị mất tiếng. Shutdown và boot trở lại vào macOS thì âm thanh hoạt động bình thường. 
+- Âm thanh: nếu khởi động máy từ Windows trước, khi reboot lại chuyển qua macOS thì bị mất tiếng. Full Shutdown và boot trở lại vào macOS thì âm thanh hoạt động bình thường. 
 
 - HDMI: không xuất được màn hình ở độ phân giải 4K 60Hz. Chỉ hoạt động ở 4K 30Hz. Mình đang tìm hiểu cách vá lỗi.
 
@@ -136,19 +133,23 @@ Hoạt động không ổn định:
 - HDMI (tuy nhiên không hoạt động với 4K 60Hz).
 - Cổng âm thanh 3.5.
 - USB Type C (tuy nhiên cần cắm trước khi boot vào macOS).
-- Bật hiệu ứng đèn nền giúp tăng giảm độ sáng mượt mà hơn (Như Windows). 
-
+- Bật hiệu ứng đèn nền giúp tăng giảm độ sáng mượt mà hơn (Như Windows).
+- Đã thêm thuộc tính sửa lỗi cho thông tin card màn hình onboard nhằm sửa lỗi màn hình đen trên macOS Ventura. 
+- Bluetooth (tương đối hoạt động đã ổn định). Đã tùy biến kext Bluetooth có thể cài đặt trên tất cả phiên bản macOS từ High Sierra cho đến Ventura (hiện tại). Bạn không cần chỉnh sửa lại EFI để thêm kext nữa.
+- Đã thêm hỗ trợ Wi-Fi trên Ventura.
+- Có thể sử dụng EFI này trên nhiều phiên bản Windows từ High Sierra cho đên Ventura (hiện tại).
+- Đã kiểm tra và cổng ổ cứng PCIe NVMe hoạt động bình thường.
+  
 ## Những điều cần lưu ý:
-- Ở đây theo build gốc thì mình Build EFI OpenCore theo phiên bản macOS 12 Monterey, vì macOS Monterey được Apple viết lại cơ chế Injector Bluetooth, chi tiết ở đây:  [Link🔗](https://openintelwireless.github.io/IntelBluetoothFirmware/FAQ.html#what-additional-steps-should-i-do-to-make-bluetooth-work-on-macos-monterey-and-newer).
-Do đó, nếu bạn muốn sử dụng EFI này trên phiên bản Big Sur thì cần phải tải file EFI dành cho Big Sur có chứa thêm kext Injector (Monterey trở lên không sử dụng kext này) và không có kext BluetoothFixUp (chỉ dùng cho Monterey trở lên vá lỗi Bluetooth cho card không phải của Apple).
+- EFI này có thể sử dụng cho phiên bản macOS mới nhất Ventura và bản Sonoma beta. Tuy nhiên, khi cài đặt thì Wi-Fi trên Sonoma sẽ không thể sử dụng được (mặc dù OpenCore không báo tiêm kext thất bại). Bạn có thể sử dụng giải pháp kext Itlwm cùng với app HeliPort để thay thế.
 
-- CẢNH BÁO: EFI này chưa được kiểm tra hoạt động trên macOS Big Sur (macOS 11), macOS Catalina (macOS 10.15) và Mojave (macOS 10.14), (phiên bản thấp nhất hỗ trợ chipset Comet Lake, Whiskey Lake dựa trên chipset này) nên mình không chắc chắn nó chạy được, mọi người có thể thử rồi report cho mình biết nha. EFI này chỉ được kiểm thử trên Monterey (macOS 12).
-
-- CẢNH BÁO thứ 2: Không nên sử dụng EFI này để cài đặt macOS Ventura (macOS 13). Vì kext Wi-Fi Airportitlwm (Wi-Fi Intel) không hoạt động do chưa có update mới cho phiên bản Ventura (đang được thử nghiệm), nếu bạn cài sẽ bị tịt cái Wi-Fi, thiệt ra thì nó vẫn nhận Wi-Fi đó nhưng bạn kết nối máy sẽ bị treo cứng ngay lặp tức (xem log có vẻ bị kernel panic, lỗi tương tự màn hình xanh chết chóc trên Windows). Nếu bạn vẫn muốn cài, bạn có thể sử dụng kext Itlwm cùng với app HeliPort (giả lập Ethernet dựa trên Wi-Fi) để sử dụng card Wi-Fi gốc trên máy.
+- CẢNH BÁO: Wi-Fi từ High Sierra đến Ventura hoạt động ổn định. Tuy nhiên, OpenCore gặp 1 lỗi bug đối với Catalina trở xuống, kext Wi-Fi chỉ nhúng được vào trong bộ cài. Khi boot vào trong macOS thì OpenCore gặp bug không tiêm được Kext vào hệ thống macOS. Giải pháp cho vấn đề này thì bạn sẽ cần dùng Kext Droplet để cài đặt kext Wi-Fi từ EFI vào thẳng hệ thống macOS thì Wi-Fi sẽ hoạt động bình thường. [Link🔗](https://github.com/chris1111/Kext-Droplet/releases/tag/V2)
 
 - Máy này tính ra hackintosh cấu hình dễ chịu đó các bạn, để mặc định hack luôn có kext sẵn hết không cần tháo thay gì hết kakaka, dĩ nhiên nếu các bạn thay sang card mà realmac dùng thì sẽ okay hơn nhưng thôi mình không muốn thay gì hết kakaka, thích chơi đồ nguyên bản thôi, chức năng phần cứng cũng hầu như nhận hết, thẻ nhớ cũng nhận luôn, bá vãi cả linh hồn, nhờ ông nào giúp được cái USB-C nữa thì máy này không khác gì realmac.
 
 - Hàng phím chức năng bị đảo ngược, phải ấn Fn chung với chức năng được in trên phím, không như khi máy chạy Windows ấn trực tiếp phím để điều chỉnh chức năng, để sử dụng hàng phím Function thì làm thao tác ngược lại.
+
+- Để cài đặt trên SSD NVMe thì bạn cần bảo đảm là SSD NVMe đó tương tích. Một số mẫu laptop ASUS này có sử dụng ổ cứng Intel SSD NVMe thì có thể cài đặt được nhưng hên xui có thể gặp lỗi. Nếu là SSD khác thì có thể sẽ gặp lỗi khi boot macOS, trường hợp này bạn muốn cài lên ổ cứng SATA trong máy hoặc ổ cứng ngoài thì bạn cần chỉnh sửa config.plist trong EFI, kiếm dòng boot-args và thêm nvme=-1 vào cuối dòng boot-args. Tùy chọn này sẽ ẩn ổ cứng NVMe trong máy của bạn làm cho macOS không nhìn thấy nó và không xảy ra xung đột gây lỗi khởi động mà không cần tháo ra. Còn model máy mình không có sẵn SSD NVMe nên mình đã mua 1 SSD tương tích hoàn hảo để gắn và chạy rất tốt.
 
 - Vì đây là file EFI đang pre-beta nên macOS chạy trên máy này khá nhiều lỗi và mình KHÔNG KHUYẾN KHÍCH các bạn sử dụng EFI này nếu bạn là người muốn sử dụng đồ có sẵn và lười tìm hiểu cách cài cũng như fix lỗi, vọc mò fix lỗi thì được kakaka, mình cũng người mới thôi, sau khi trải qua 7x7=49 lần thất bại đến tới đây bất lực quá nên mới cần nhờ cộng đồng giúp, nếu trong tương lai EFI này được cộng đồng giúp mình chỉnh sửa và hoạt động chạy okay hơn thì mọi người có thể tải về sử dụng nhé. Mình sẽ update theo thời gian khi rảnh.  
 
